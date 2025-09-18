@@ -1,0 +1,44 @@
+.social-icon {
+  width: 55px;
+  height: 55px;
+  margin: 0 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+/* Instagram */
+.social-icon.instagram {
+  background: radial-gradient(circle at 30% 30%, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+}
+
+/* Facebook */
+.social-icon.facebook {
+  background-color: #1877f2;
+}
+
+/* YouTube */
+.social-icon.youtube {
+  background-color: #ff0000;
+}
+
+/* LinkedIn */
+.social-icon.linkedin {
+  background-color: #0077b5;
+}
+
+/* TikTok */
+.social-icon.tiktok {
+  background-color: #000000;
+}
+
+/* Hover Effect */
+.social-icon:hover {
+  transform: scale(1.2);
+  opacity: 0.9;
+}
