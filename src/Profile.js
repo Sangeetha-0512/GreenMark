@@ -8,9 +8,6 @@ const Profile = () => {
     name: "Sangeetha",
     ecoCoins: 120,
     registerDate: "2025-09-18",
-    sponsorName: "GreenMark Sponsor",
-    shopName: "Eco Shop",
-    ownerName: "Mr. Kumar",
   });
 
   const [speciesList, setSpeciesList] = useState([]);
@@ -63,9 +60,7 @@ const Profile = () => {
                 <p><strong>Name:</strong> {user.name}</p>
                 <p><strong>Eco-Coins:</strong> {user.ecoCoins}</p>
                 <p><strong>Register Date:</strong> {user.registerDate}</p>
-                <p><strong>Sponsor:</strong> {user.sponsorName}</p>
-                <p><strong>Shop Name:</strong> {user.shopName}</p>
-                <p><strong>Owner Name:</strong> {user.ownerName}</p>
+                <p><strong>No.of Saplings:</strong> </p>
               </Col>
               <Col md={6} className="text-center">
                 {/* QR Code */}

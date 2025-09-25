@@ -1,8 +1,17 @@
-// import React, { useContext, useState } from "react";
-// import { Container, Row, Col, Card, Form, Button, InputGroup } from "react-bootstrap";
+
+// import React, { useState } from "react";
+// import {
+//   Container,
+//   Row,
+//   Col,
+//   Card,
+//   Form,
+//   Button,
+//   InputGroup,
+// } from "react-bootstrap";
 // import { useNavigate } from "react-router-dom";
-// import axios from "axios";
 // import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 // const Login = () => {
 //   const navigate = useNavigate();
 
@@ -14,26 +23,17 @@
 //     setInputDatas((prev) => ({ ...prev, [name]: value }));
 //   };
 
-//   const handleSubmit = async (e) => {
+//   const handleSubmit = (e) => {
 //     e.preventDefault();
 
-//     try {
-//       const res = await axios.post("http://localhost:3000/login", inputdatas);
-//       if (res.status === 200) {
-//         localStorage.setItem("jwt-token", res.data.token);
-//         window.dispatchEvent(new Event("token-update"));
-//         alert("Login successful!");
-//         navigate("/home");
-//       }
-//     } catch (error) {
-//       const status = error.response?.status;
-//       if (status === 404) alert("User not found");
-//       else if (status === 401) alert("Incorrect password");
-//       else if (status === 403) {
-//         alert("Plan expired. Please buy a plan");
-//         navigate("/pricing", { state: { from: "login" } });
-//       } else alert("Login failed");
-//     }
+//     // ✅ Instead of DB/API check, just log to console
+//     console.log("✅ Login Attempt:", inputdatas);
+
+//     alert("Login successful!");
+//     navigate("/home");
+
+//     // clear form after login
+//     setInputDatas({ email: "", password: "" });
 //   };
 
 //   return (
@@ -43,7 +43,6 @@
 //           <Card className="shadow-lg p-4">
 //             {/* Header */}
 //             <div className="text-center mb-4">
-             
 //               <h3 className="fw-bold mt-2 text-success">GreenMark Login</h3>
 //               <p className="text-muted">Enter your email and password</p>
 //             </div>
@@ -107,9 +106,6 @@
 
 // export default Login;
 
-
-
-
 import React, { useState } from "react";
 import {
   Container,
@@ -121,6 +117,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
@@ -134,17 +131,30 @@ const Login = () => {
     setInputDatas((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // ✅ Instead of DB/API check, just log to console
-    console.log("✅ Login Attempt:", inputdatas);
-
-    alert("Login successful!");
-    navigate("/home");
-
-    // clear form after login
-    setInputDatas({ email: "", password: "" });
+    try {
+      // ✅ Send email & password to backend
+      const res = await axios.post("http://localhost:3001/api/login", inputdatas);
+      if (res.status === 200) {
+        // ✅ Save token in localStorage
+        localStorage.setItem("jwt-token", res.data.token);
+        alert("Login successful!");
+        navigate("/home");
+        setInputDatas({ email: "", password: "" }); // clear form
+      }
+    } catch (error) {
+      const status = error.response?.status;
+      console.log("error msg",status);
+      if (status === 404) alert("❌ User not found!");
+      else if (status === 401) alert("❌ Incorrect password!");
+      else if (status === 403) {
+        alert("⚠️ Your plan has expired. Please buy a plan.");
+        navigate("/pricing", { state: { from: "login" } });
+      } else {
+        alert("⚠️ Login failed. Please try again.");
+      }
+    }
   };
 
   return (
